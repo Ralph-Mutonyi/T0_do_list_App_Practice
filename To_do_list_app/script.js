@@ -1,48 +1,72 @@
-// Immediately invoked function
-(() => {
-    let toDolistArray = [];
+( () => {
+    // declare empty toDoList Array
+    let toDoListArray = [];
 
-    const form = document.querySelector(" .form");
+    // variables refrenced from the html DOC
+    const form = document.querySelector(".form");
     const input = form.querySelector(".form_input");
-    const ul = document.querySelector(".toDoList")
+    const ul= document.querySelector(".toDoList")
+    
 
-    // event listener for the submit event
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();  // prevent default behaviour on the form. 
-        let itemId = String(Date.now()); // give an item a unique ID which is date
-        let toDOItem = input.value;  // asign input value to the to do item variable
-        addItemToDOM(itemId, toDOItem);
-        addItemToArray(itemId, toDOItem);
-        input.value = "";
+    // event Listener for submit / enter
+
+    form.addEventListener('submit', (e) => {
+        // prevent default behaviour -- Page Reload 
+        e.preventDefault();
+        // give the added item an UniqueID
+
+        let itemId = String(Date.now());
+
+        // get / assign input Value
+        let toDoItem = input.value;
+
+        // pass the ID and item into two function
+
+        addItemToDOM(itemId, toDoItem);
+        addItemToArray(itemId, toDoItem );
+
+        // clear the input box ( default behaviour gotten rid in line 15)
+        input.value = '';
     });
 
-    ul.addEventListener('Click', (e) =>{
-        let id = e.target.getAttribute("data-id");
-        if(!id) return;
+    ul.addEventListener('click', (e) => {
+        let id = e.target.getAttribute('data-id');
 
-        removeItemFromDOM();
-        removeItemFromArray();
+        if(!id) return; // user clicked in something else
+
+        // pass the id through to function
+        removeItemFromDOM(id);
+        removeItemFromArray(id);
     });
 
-    function addItemToDOM(itemId, todoItem){
-        const li = document.createElement("li");
-        li.setAttribute("data-id", itemId);
-        li.innerText = todoItem
+    function addItemToDOM(itemId, toDoItem){
+        // create a li 
+        const li = document.createElement('li');
+        li.setAttribute('data-id', itemId);
+
+        // add toDoItem text to li
+        li.innerText = toDoItem
+        // add li to the DOM
         ul.appendChild(li);
     }
 
     function addItemToArray(itemId, toDoItem){
-        toDolistArray.push(itemId, toDoItem);
-        console.log(toDolistArray);
+        // adds item to array as an object with an ID so we can find and delete it later
+        toDoListArray.push({itemId, toDoItem});
+        // output the array to the console
+        console.log(toDoListArray);
     }
 
-    function removeItemFromDOM(id){
-        var li = document.querySelector('[data-id="'+ id +'"]');
+    function removeItemFromDOM(id) {
+        // get the list item by data ID
+        var li = document.querySelector('[data-id="' + id + '"]');
+        // remove list item
         ul.removeChild(li);
     }
 
-    function removeItemFromArray(id){
-        toDolistArray = toDolistArray.filter((item) => item.itemId !== id);
-        console.log(toDolistArray);
+    function removeItemFromArray(id) {
+        // create a new toDoListArray with all li's that don't match the ID
+        toDoListArray = toDoListArray.filter((item) => item.itemId !== id);
+        console.log(toDoListArray);
     }
-})();
+}) ();
