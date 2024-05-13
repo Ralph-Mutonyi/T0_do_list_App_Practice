@@ -1,9 +1,9 @@
 // initialize Firebase with your config
 
 firebase.initializeApp({
-    apiKey: "AIzaSyCwHj2zOHiB3vVDOzjTzV-UDzzWihzhBfg",
-    authDomain: "plp-projects-d957d.firebaseapp.com",
-    projectId: "plp-projects-d957d",
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
 });
 
 const db = firebase.firestore();
